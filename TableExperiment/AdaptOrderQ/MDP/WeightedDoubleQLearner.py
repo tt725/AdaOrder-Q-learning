@@ -1,0 +1,41 @@
+import numpy as np
+from Env import Env
+
+
+class WeightedDoubleQLearner:
+    def __init__(self, epsilon=0.1, gamma=1.0, learningRate=0.1):
+        self.learningRate = learningRate
+        self.epsilon = epsilon
+        self.gamma = gamma
+        self.init_Q_table()
+
+    def init_Q_table(self):
+        self.Q1 = np.random.normal(0, 0.01, size=(Env().nState, Env().nAction))
+        self.Q2 = np.random.normal(0, 0.01, size=(Env().nState, Env().nAction))
+
+    def explore(self, state):
+        action_number = Env().action_number(state)
+        if np.random.random() >= self.epsilon:
+            Q3 = [(self.Q1[state][i] + self.Q2[state][i]) / 2.0 for i in range(action_number)]
+            action = np.argmax(Q3[:])
+        else:
+            action = np.random.choice(action_number)
+        return action
+
+    def learning(self, state, action, reward, next_state, done):
+        Y = reward
+        if np.random.random() >= 0.5:
+            if not done:
+                A_max = np.argmax(self.Q1[next_state][:Env().action_number(next_state)])
+                Y += self.gamma * (0.5*self.Q1[next_state][A_max] + 0.5*self.Q2[next_state][A_max])
+            self.Q1[state][action] += self.learningRate * (Y - self.Q1[state][action])
+        else:
+            if not done:
+                A_max = np.argmax(self.Q2[next_state][:Env().action_number(next_state)])
+                Y += self.gamma * (0.5 * self.Q2[next_state][A_max] + 0.5 * self.Q1[next_state][A_max])
+            self.Q2[state][action] += self.learningRate * (Y - self.Q2[state][action])
+
+    def maxQ(self, state):
+        action_number = Env().action_number(state)
+        Q3 = [(self.Q1[state][i] + self.Q2[state][i]) / 2.0 for i in range(action_number)]
+        return max(Q3)
