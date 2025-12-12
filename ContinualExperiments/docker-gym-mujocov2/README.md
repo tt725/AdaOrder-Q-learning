@@ -1,0 +1,1 @@
+This dockerfile contains commands to setup the older gym mujoco v2 environments. The results in the OrderQ paper were run with the v2 environments. If you use this dockerfile, you will be able to run OrderQ code right away. 
