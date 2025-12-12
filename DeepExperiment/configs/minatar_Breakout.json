@@ -1,0 +1,88 @@
+{
+  "env": [
+    {
+      "name": ["Breakout-MinAtar-v0"],
+      "train_steps": [1e6],
+      "test_per_episodes": [100],
+      "input_type": ["pixel"]
+    }
+  ],
+  "agent": [
+     {
+      "name": ["DQN", "DDQN"]
+    },
+    {
+      "name": ["WDQN"],
+      "weight_parameter": [0.5]
+    },
+    {
+      "name": ["SCDQN"],
+      "scq_parameter": [2.0]
+    },
+    {
+      "name": ["SoftmaxDQN"],
+      "SoftQ_parameter": [2]
+    },
+    {
+      "name": ["MaxminDQN", "AveragedDQN"],
+      "target_networks_num": [8]
+    },
+    {
+      "name": ["REDQN", "EBDQN"],
+      "target_networks_num": [8]
+    },
+    {
+      "name": ["AdaEDQN"],
+      "target_networks_num": [8]
+    },
+    {
+      "name": ["OrderDQN"],
+      "target_networks_num": [8],
+      "order_num": [2,4,8]
+    },
+    {
+      "name": ["OrderDQN"],
+      "target_networks_num": [2,4],
+      "order_num": [1]
+    },
+    {
+      "name": ["AdaOrderDQN"],
+      "target_networks_num": [4,8,16,32]
+    },
+    {
+      "name": ["AdaADQN"],
+      "target_networks_num": [8]
+    },
+    {
+      "name": ["AdaMDQN"],
+      "target_networks_num": [8]
+    }
+  ],
+  "device": ["cuda"],
+  "feature_dim": [128],
+  "hidden_layers": [[]],
+  "memory_type": ["Replay"],
+  "memory_size": [1e5],
+  "exploration_type": ["LinearEpsilonGreedy"],
+  "exploration_steps": [5e3],
+  "epsilon_steps": [1e5],
+  "epsilon_start": [1.0],
+  "epsilon_end": [0.1],
+  "loss": ["SmoothL1Loss"],
+  "optimizer": [
+    {
+      "name": ["RMSprop"],
+      "kwargs": [{"lr": [1e-2], "alpha": [0.95], "centered": [true], "eps": [0.01]}]
+    }
+  ],
+  "batch_size": [32],
+  "display_interval": [1000],
+  "rolling_score_window": [{"Train": [100], "Test": [10]}],
+  "discount": [0.99],
+  "seed": [1],
+  "show_tb": [false],
+  "gradient_clip": [-1],
+  "target_network_update_freqency": [1000],
+  "sgd_update_frequency": [1],
+  "generate_random_seed": [true]
+}
