@@ -1,0 +1,5 @@
+from gym_exploration.envs.nchain import NChainEnv
+from gym_exploration.envs.lockbernoulli import LockBernoulliEnv
+from gym_exploration.envs.lockgaussian import LockGaussianEnv
+from gym_exploration.envs.sparse_mountain_car import SparseMountainCarEnv
+from gym_exploration.envs.diabolical_comb_lock import DiabolicalCombLockEnv
